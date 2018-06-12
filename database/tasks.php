@@ -3,7 +3,7 @@
   class TaskModel extends Model {
     public function getAll () {
       $db = parent::connect();
-      $sql = 'select * from task';
+      $sql = 'select * from tasks';
       $query = $db->prepare($sql);
       $query->execute();
       $tasks = $query->fetchAll();
@@ -11,14 +11,23 @@
   }
  public function createOne ($name) {
      $db = parent::connect();
-     $sql = 'insert into task set name=:name';
+     $sql = 'insert into tasks set name=:name';
      $query =$db->prepare($sql);
      $query->bindValue(':name' ,$name);
      $query->execute();
    }
+
+    public function update ($name, $id) {
+     $db = parent::connect();
+     $sql = 'update tasks set name=:name where id=:id';
+     $query =$db->prepare($sql);
+     $query->bindValue(':name' ,$name);
+     $query->bindValue(':id' ,$id);
+     $query->execute();
+   }
   public function delete ($id) {
     $db = parent::connect();
-    $sql = 'delete from task where id='.$id;
+    $sql = 'delete from tasks where id='.$id;
     $query = $db->prepare($sql);
     $query->execute();
   } 

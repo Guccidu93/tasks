@@ -17,6 +17,14 @@
       require_once $app."/views/layout.php";
     }
 
+    public function updateTask($name, $id){
+      parent::update($name, $id);
+      $tasksList = parent::getAll();
+      global $app;
+      $content = $app."/views/tasks.php";
+      require_once $app."/views/layout.php";
+    }
+
     public function deleteTask($id){
       parent::delete($id);
       $tasksList = parent::getAll();
@@ -36,6 +44,9 @@
     case "POST":
         if($route->getAction() == 'delete'){
           $tasks->deleteTask($_POST['id']);
+        }
+        else if($route->getAction() == 'update'){
+          $tasks->updateTask($_POST['update'], $_POST['id']);
         }
         else if(isset($_POST['formu'])){
           $tasks->createOneTask($_POST['formu']);          
